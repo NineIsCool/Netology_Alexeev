@@ -49,7 +49,8 @@ public class CustomerControllerTest {
                         .param("name", "New Customer")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value("2"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("New Customer"));
+
     }
 }

@@ -29,15 +29,24 @@ public class OperationsController {
         List<Operation> operations = statementService.getOperationsFromCustomer(customerId);
         List<OperationDTO> operationDTOS = operations.stream()
                 .map(operation ->
-                        new OperationDTO(operation.getId(),operation.getSum(), operation.getCurrency(), operation.getMerchant(), operation.getOperationCreditType())).collect(Collectors.toList());
+                        new OperationDTO(operation.getId(),
+                                operation.getCustomerId(),
+                                operation.getSum(),
+                                operation.getCurrency(),
+                                operation.getMerchant(),
+                                operation.getOperationCreditType())).collect(Collectors.toList());
         return new OperationsGetResponse(operationDTOS);
     }
 
     @PostMapping()
     public OperationDTO addOperation(@RequestBody Operation operation){
-        statementService.saveOperation(operation);
         asyncInputOperationService.saveOperation(operation);
-        return new OperationDTO(operation.getId(),operation.getSum(), operation.getCurrency(), operation.getMerchant(), operation.getOperationCreditType());
+        return new OperationDTO(operation.getId(),
+                operation.getCustomerId(),
+                operation.getSum(),
+                operation.getCurrency(),
+                operation.getMerchant(),
+                operation.getOperationCreditType());
     }
 
     @DeleteMapping("/delete/{customerId}/{operationId}")

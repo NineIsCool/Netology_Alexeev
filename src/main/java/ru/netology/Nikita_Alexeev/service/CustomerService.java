@@ -2,9 +2,12 @@ package ru.netology.Nikita_Alexeev.service;
 
 import lombok.Getter;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import ru.netology.Nikita_Alexeev.domain.Customer;
+import ru.netology.Nikita_Alexeev.dto.CustomerDTO;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -27,9 +30,17 @@ public class CustomerService {
         Customer customer = new Customer(id, name);
         storage.add(customer);
     }
-
+    public List<Customer> getCustomers() {
+        return new ArrayList<>(storage);
+    }
     public Customer getCustomer(int customerId) {
-        return storage.get(customerId);
+        return getCustomers().stream()
+                .filter(c -> c.getId() == customerId)
+                .map(c -> new Customer(c.getId(), c.getName()))
+                .findFirst().orElse(null);
     }
 
+    public void removeCustomer(int id) {
+        storage.removeIf(customer -> customer.getId() == id);
+    }
 }

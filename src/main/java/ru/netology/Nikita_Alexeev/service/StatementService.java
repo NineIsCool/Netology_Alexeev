@@ -50,12 +50,10 @@ public class StatementService {
     public List<Operation> getOperationsFromCustomer(int customerId) {
         return storage.get(customerId);
     }
-    public void removeOperationsOnCustomerId(int cusromerId, int operationID){
-        List<Operation> operations =storage.get(cusromerId);
-        for(Operation operation: operations){
-            if (operation.getId()==operationID){
-                storage.get(cusromerId).remove(operationID-1);
-            }
+    public void removeOperationsOnCustomerId(int customerId, int operationID){
+        List<Operation> operations =storage.get(customerId);
+        if (operations!=null){
+            operations.removeIf(operation -> operation.getId() == operationID);
         }
     }
 }

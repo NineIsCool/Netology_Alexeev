@@ -8,6 +8,7 @@ import ru.netology.Nikita_Alexeev.domain.operation.OperationCreditType;
 @Data
 @AllArgsConstructor
 public class OperationDTO {
+    private final int id;
     private final int customerId;
     private final double sum;
     private final Currency currency;
